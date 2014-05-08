@@ -110,19 +110,19 @@ TestSpree::Application.routes.draw do
 
     # devise for users
     # go to our custom controller(s)
-    #devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" }
-    #devise_scope :user do
+    devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" }
+    devise_scope :user do
       # delete '/users/logout' => 'devise/sessions#destroy'
-    #end
+    end
 
     # users
-    #resources :users, only: [:show, :edit, :update] do
-    #  collection do
-    #    get  'redeem'
-    #  end
-    #  post 'redeem'
-    #  get  'redeem'
-    #end
+    resources :users, only: [:show, :edit, :update] do
+      collection do
+        get  'redeem'
+      end
+      post 'redeem'
+      get  'redeem'
+    end
 
     # callback for omniauth (instagram/fb) authentication
     match '/auth/:provider/callback' => 'authentications#create', via: [:get, :post]
@@ -157,8 +157,8 @@ TestSpree::Application.routes.draw do
     root :to => 'high_voltage/pages#show', :id => 'home'
 
     # active admin routes, devise routes for admin users
-    #ActiveAdmin.routes(self)
-    #devise_for :admin_users, ActiveAdmin::Devise.config
+    ActiveAdmin.routes(self)
+    devise_for :admin_users, ActiveAdmin::Devise.config
 
     # callback for omniauth (instagram/fb) authentication
     match '/auth/:provider/callback' => 'authentications#create', via: [:post, :get]
