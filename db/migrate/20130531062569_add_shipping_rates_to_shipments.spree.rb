@@ -1,7 +1,7 @@
 # This migration comes from spree (originally 20130417123427)
 class AddShippingRatesToShipments < ActiveRecord::Migration
   def up
-    Spree::Shipment.find_each do |shipment|
+    Spree::Shipment.all.each do |shipment|
       shipment.shipping_rates.create(:shipping_method_id => shipment.shipping_method_id,
                                      :cost => shipment.cost,
                                      :selected => true)

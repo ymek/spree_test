@@ -11,7 +11,7 @@ class AddLineItemIdToSpreeInventoryUnits < ActiveRecord::Migration
       shipments.find_each do |shipment|
         shipment.inventory_units.group_by(&:variant).each do |variant, units|
 
-          line_item = shipment.order.find_line_item_by_variant(variant)
+          line_item = shipment.order.find_line_item_by_variant(variant) if shipment.present? && shipment.order.present?
           next unless line_item
 
           Spree::InventoryUnit.where(id: units.map(&:id)).update_all(line_item_id: line_item.id)
